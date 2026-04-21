@@ -658,6 +658,10 @@ const irParaDashboard = () => router.push('/dashboard');
     cursor: pointer;
 }
 
+.transaction-card {
+    padding: 10px;
+}
+
 .icon-circle {
     background: #f0ebf8;
     width: 40px;
