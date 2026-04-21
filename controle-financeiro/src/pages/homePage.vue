@@ -570,7 +570,7 @@ const irParaDashboard = () => router.push('/dashboard');
 
 .section-title {
     font-weight: 600;
-    margin: 20px 0 10px 0;
+    margin: 45px 0 10px 0;
     color: #555;
     font-size: 0.95rem;
 }
