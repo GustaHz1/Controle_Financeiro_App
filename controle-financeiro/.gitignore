@@ -31,3 +31,21 @@ coverage
 
 .env
 .env.*
+
+.firebase/
+.firebaserc
+
+# Arquivos de compilação e pacotes da loja
+*.apk
+*.aab
+*.apks
+
+# Chaves de Assinatura Digital
+*.jks
+*.keystore
+
+# Arquivo de configuração de serviços nativos do Google
+google-services.json
+
+# Cache do plugin do Capacitor
+.capacitor/

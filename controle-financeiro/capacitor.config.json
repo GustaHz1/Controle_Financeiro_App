@@ -1,0 +1,12 @@
+{
+     "appId": "com.gustavo.controlefinanceiro",
+     "appName": "Controle Financeiro",
+     "webDir": "dist",
+     "plugins": {
+       "GoogleAuth": {
+         "scopes": ["profile", "email"],
+         "serverClientId": "845848521181-vki43no1tmv5mo89naammvc3t1o5t2j0.apps.googleusercontent.com",
+         "forceCodeForRefreshToken": true
+       }
+     }
+   }

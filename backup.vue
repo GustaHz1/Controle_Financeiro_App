@@ -4,8 +4,6 @@ import { useRouter } from 'vue-router';
 import { auth, db } from '../firebase/index';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
-import { Keyboard } from '@capacitor/keyboard';
 
 const router = useRouter();
 
@@ -51,7 +49,7 @@ const userPhoto = ref('');
 const fileInput = ref(null);
 
 const salarioBruto = ref(0);
-const valePorcentagem = ref(0);
+const valePorcentagem = ref(0); // Novo estado para o Vale
 const mostrarDetalhesSalario = ref(false);
 const carregando = ref(true);
 const mostrarModalConquistas = ref(false);
@@ -127,7 +125,7 @@ const aoTrocarFoto = (event) => {
 };
 
 // ==========================================
-// CÁLCULOS DO SALÁRIO
+// CÁLCULOS DO SALÁRIO (Com Vale e Regras Novas)
 // ==========================================
 
 // 1. Vale (Livre de impostos)
@@ -147,7 +145,7 @@ const inss = computed(() => {
     return 908.85;
 });
 
-// 4. IRRF
+// 4. IRRF (Nova Regra: Apenas se Base for > 5000)
 const irrf = computed(() => {
     const b = baseTributavel.value - inss.value;
     if (b <= 5000) return 0;
@@ -215,6 +213,10 @@ const carregarDados = async (user) => {
     carregando.value = false;
 };
 
+// ==========================================
+// AÇÕES & CRUD
+// ==========================================
+
 const verificarConquistas = (novaTransacao) => {
     const novas = [];
     const tValor = novaTransacao ? novaTransacao.valor : 0;
@@ -248,6 +250,7 @@ const addTransacao = () => {
 
 const removeTransacao = (id) => { transacoes.value = transacoes.value.filter(t => t.id !== id); salvarNoFirebase(); };
 
+// FUNÇÃO NOVA: Contabilizar o salário no mês (+)
 const lancarSalarioMensal = () => {
     if (salarioBruto.value <= 0) return mostrarNotificacao('Erro', 'Insira um salário bruto.', 'erro');
 
@@ -287,41 +290,7 @@ const atualizarMetaProgressiva = (meta) => {
 
 const atualizarSalario = () => { salvarNoFirebase(); };
 
-// ==========================================
-// ADMOB
-// ==========================================
-const inicializarAdMob = async () => {
-    try {
-        await AdMob.initialize({
-            requestTrackingAuthorization: true,
-        });
-
-        const options = {
-            adId: 'ca-app-pub-8676670497930791~2847114635',
-            adSize: BannerAdSize.BANNER,
-            position: BannerAdPosition.BOTTOM_CENTER,
-            margin: 0,
-            isTesting: true
-        };
-        
-        await AdMob.showBanner(options);
-
-        Keyboard.addListener('keyboardWillShow', () => {
-            AdMob.hideBanner(); 
-        });
-
-        Keyboard.addListener('keyboardWillHide', () => {
-            AdMob.resumeBanner();
-        });
-
-    } catch (error) {
-        console.error("Falha ao carregar anúncio: ", error);
-    }
-};
-
 onMounted(() => {
-    inicializarAdMob();
-
     onAuthStateChanged(auth, (user) => {
         if (user) carregarDados(user);
         else router.push('/');
@@ -357,7 +326,7 @@ onMounted(() => {
                         {{ isDarkTheme ? '☀️' : '🌙' }}
                     </button>
                     
-                    <!-- 2. Dashboard -->
+                    <!-- 2. NOVO BOTÃO: Dashboard -->
                     <button @click="router.push('/dashboard')" class="btn-icon" title="Análise de Evolução">
                         📊
                     </button>
@@ -446,7 +415,7 @@ onMounted(() => {
                 </div>
             </section>
 
-            <!-- GASTOS E RENDAS EXTRAS -->
+            <!-- NOVO LANÇAMENTO (GASTOS E RENDAS EXTRAS) -->
             <section class="card transaction-card">
                 <h3>📝 Novo Lançamento Extra</h3>
                 <div class="input-grid">
@@ -523,6 +492,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* TODO O CSS IDÊNTICO AO CÓDIGO ANTERIOR COM VARIÁVEIS DE TEMA */
 .app-container {
     --bg-color: #f8f9fa;
     --header-bg: #820ad1;

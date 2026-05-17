@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Controle Financeiro</string>
+    <string name="title_activity_main">Controle Financeiro</string>
+    <string name="package_name">com.gustavo.financas</string>
+    <string name="custom_url_scheme">com.gustavo.financas</string>
+    <string name="server_client_id">845848521181-vki43no1tmv5mo89naammvc3t1o5t2j0.apps.googleusercontent.com</string>
+</resources>

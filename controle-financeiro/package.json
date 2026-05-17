@@ -12,6 +12,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.0.0",
+    "@capacitor/android": "^8.3.2",
+    "@capacitor/cli": "^8.3.2",
+    "@capacitor/core": "^8.3.2",
+    "@capacitor/keyboard": "^8.0.3",
+    "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
     "apexcharts": "^5.3.6",
     "firebase": "^12.6.0",
     "vue": "^3.5.22",
